@@ -1,0 +1,6 @@
+*
+!.gitignore
+!lab*/
+!lab*/CMakeList.txt
+!lab*/lab*/*.cpp
+!lab*/lab*/*shader
