@@ -3,4 +3,8 @@
 !lab*/
 !lab*/CMakeLists.txt
 !lab*/lab*/*.cpp
+!lab*/common*/
+!lab*/common/*.cpp
+!lab*/common/*.h
+!lab*/common/*.{cpp,h}
 !lab*/lab*/*shader
