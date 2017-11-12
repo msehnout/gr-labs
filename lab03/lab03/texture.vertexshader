@@ -9,11 +9,13 @@ out vec2 UV;
 
 // model view projection matrix 
 uniform mat4 MVP;
+//
+uniform mat4 transformation;
 
 void main()
 {
     // assign vertex position
-    gl_Position = MVP * vec4(vertexPosition_modelspace, 1.0);
+    gl_Position = MVP * transformation * vec4(vertexPosition_modelspace, 1.0);
 
     // UV of the vertex. No special space for this one.
     UV = vertexUV;

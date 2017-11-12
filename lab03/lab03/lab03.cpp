@@ -38,6 +38,7 @@ GLFWwindow* window;
 Camera* camera;
 GLuint shaderProgram;
 GLuint MVPLocation;
+GLuint transformation;
 GLuint textureSampler;
 GLuint texture;
 GLuint suzanneVAO;
@@ -55,6 +56,7 @@ void createContext()
 
     // Get a pointer location to model matrix in the vertex shader
     MVPLocation = glGetUniformLocation(shaderProgram, "MVP");
+    transformation = glGetUniformLocation(shaderProgram, "transformation");
 
     // Task 1: load
     loadOBJ("suzanne.obj", suzanneVertices, suzanneUVs, suzanneNormals);
@@ -135,7 +137,7 @@ void mainLoop()
             vec3(0, 0, 0), // and looks at the origin
             vec3(0, 1, 0)  // Head is up (set to 0, -1, 0 to look upside-down)
         );
-		++t;
+
         modelMatrix = mat4(1.0);
 
         MVP = projectionMatrix * viewMatrix * modelMatrix;
@@ -159,6 +161,17 @@ void mainLoop()
         //*/
 
         glUniformMatrix4fv(MVPLocation, 1, GL_FALSE, &MVP[0][0]);
+        float angle = radians((float)t);
+        // Rotation around Y axis in homogeneous coordinates:
+        //  cosX   0   sinX   0
+        //  0      1   0      0
+        //  -sinX  0   cosX   0
+        //  0      0   0      1
+        mat4 transf(cos(angle),0,sin(angle),0,
+                    0,1,0,0,
+                    -sin(angle),0,cos(angle),0,
+                    0,0,0,1);
+        glUniformMatrix4fv(transformation, 1, GL_FALSE, &transf[0][0]);
 
         // Task 6: texture
         /*/
@@ -170,11 +183,10 @@ void mainLoop()
         //*/
 
         // draw
-
         glDrawArrays(GL_TRIANGLES, 0, suzanneVertices.size());
 
         glfwSwapBuffers(window);
-
+        ++t;
         glfwPollEvents();
     } while (glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS &&
         glfwWindowShouldClose(window) == 0);
