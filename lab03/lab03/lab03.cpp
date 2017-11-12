@@ -111,8 +111,9 @@ void mainLoop()
 
         // Task 2: perspective projection
         
-        // Projection matrix: 45� Field of View, 4:3 ratio, display range : 0.1 unit <-> 100 units
-        projectionMatrix = perspective(radians(45.0f), 4.0f / 3.0f, 0.1f, 100.0f);
+        // Projection matrix: 45 Field of View, 4:3 ratio, display range : 0.1 unit <-> 100 units
+        float zoom = 20+35+35*sin((float)t/100);
+        projectionMatrix = perspective(radians(zoom), 4.0f / 3.0f, 0.1f, 100.0f);
         // Task 2.1: change z translation and define MVP
         modelMatrix = translate(mat4(), vec3(0.0, 0.0, -10));
         MVP = projectionMatrix * modelMatrix;
