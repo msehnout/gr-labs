@@ -5,12 +5,14 @@
 #include <vector>
 #include <glm/glm.hpp>
 
+static std::vector<unsigned int> DEFAULT_VEC = std::vector<unsigned int>();
+
 void loadOBJ(
     std::string path,
     std::vector<glm::vec3>& verticies,
     std::vector<glm::vec2>& uvs,
     std::vector<glm::vec3>& normals,
-    std::vector<unsigned int>& indices = std::vector<unsigned int>()
+    std::vector<unsigned int>& indices = DEFAULT_VEC
 );
 
 void loadOBJWithTiny(
@@ -18,7 +20,7 @@ void loadOBJWithTiny(
     std::vector<glm::vec3>& verticies,
     std::vector<glm::vec2>& uvs,
     std::vector<glm::vec3>& normals,
-    std::vector<unsigned int>& indices = std::vector<unsigned int>()
+    std::vector<unsigned int>& indices = DEFAULT_VEC
 );
 
 void loadVTP(
@@ -26,7 +28,7 @@ void loadVTP(
     std::vector<glm::vec3>& verticies,
     std::vector<glm::vec2>& uvs,
     std::vector<glm::vec3>& normals,
-    std::vector<unsigned int>& indices = std::vector<unsigned int>()
+    std::vector<unsigned int>& indices = DEFAULT_VEC
 );
 
 class Drawable

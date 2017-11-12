@@ -126,11 +126,12 @@ void mainLoop()
         //*/
 
         // Task 4: view
-        /*/
+        //*/
         // Task 4.1: make the camera move linearly in time
         // Task 4.2: make the camera move periodically around the object
         viewMatrix = lookAt(
-            vec3(10 * cos((float)t / 500.0), sin(t/100.0), 10*sin((float)t/500.0)), // Camera position, in World Space
+            //vec3(10 * cos((float)t / 200.0), 0, 10*sin((float)t/200.0)), // Camera position, in World Space
+            vec3(0, 0, 10),
             vec3(0, 0, 0), // and looks at the origin
             vec3(0, 1, 0)  // Head is up (set to 0, -1, 0 to look upside-down)
         );
@@ -145,10 +146,11 @@ void mainLoop()
         glUseProgram(shaderProgram);
 
         // suzanne
+
         glBindVertexArray(suzanneVAO);
 
         // Task 5: camera
-        //*/
+        /*/
         camera->update();
         projectionMatrix = camera->projectionMatrix;
         viewMatrix = camera->viewMatrix;
@@ -168,6 +170,7 @@ void mainLoop()
         //*/
 
         // draw
+
         glDrawArrays(GL_TRIANGLES, 0, suzanneVertices.size());
 
         glfwSwapBuffers(window);
