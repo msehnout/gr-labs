@@ -124,7 +124,7 @@ void mainLoop()
         mat4 viewMatrix = camera->viewMatrix;
 
         // Task 1.2: render the plane
-        //*/
+        /*/
         glBindVertexArray(planeVAO);
         mat4 planeModelMatrix = mat4(1);
         mat4 planeMVP = projectionMatrix * viewMatrix * planeModelMatrix;
@@ -135,18 +135,20 @@ void mainLoop()
 
         // Task 2.1: translate the plane in + -y direction using the keyboard
         // Task 2.2: and rotate the plane around z-direction
-        /*/
+        //*/
         glBindVertexArray(planeVAO);
 
         // Task 2.1: translation
         vec3 planePosition(0, planeY, 0);
-        mat4 planeTranslation = translate(...);
+        mat4 planeTranslation = translate(mat4(1), planePosition);
 
         // Task 2.2: rotation
-        mat4 planeRotation = rotate(mat4(), ..., ...);
+        mat4 planeRotation = rotate(mat4(1), planeAngle, vec3(0,0,1));
 
-        mat4 planeModelMatrix = ...;
-        mat4 planeMVP = ...;
+        //mat4 planeModelMatrix = ...;
+        //mat4 planeMVP = ...;
+        mat4 planeModelMatrix = mat4(1) * planeTranslation * planeRotation;
+        mat4 planeMVP = projectionMatrix * viewMatrix * planeModelMatrix;
         glUniformMatrix4fv(MVPLocation, 1, GL_FALSE, &planeMVP[0][0]);
         glUniformMatrix4fv(MLocation, 1, GL_FALSE, &planeModelMatrix[0][0]);
         glDrawArrays(GL_TRIANGLES, 0, 6);
@@ -194,6 +196,12 @@ void pollKeyboard(GLFWwindow* window, int key, int scancode, int action, int mod
     }
 
     // Task 2.2: planeAngle J, L keys
+    if (key == GLFW_KEY_O) {
+        planeAngle += 0.01;
+    }
+    if (key == GLFW_KEY_L) {
+        planeAngle -= 0.01;
+    }
 
     // Task 3.4: toggle polygon mode
     if (key == GLFW_KEY_T && action == GLFW_PRESS) {

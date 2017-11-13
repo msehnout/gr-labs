@@ -6,9 +6,9 @@ using namespace glm;
 
 Camera::Camera(GLFWwindow* window) : window(window)
 {
-    position = glm::vec3(0, 0, 5);
-    horizontalAngle = 3.14f;
-    verticalAngle = 0.0f;
+    position = glm::vec3(0, 1, 5);
+    horizontalAngle = 2.6f;
+    verticalAngle = -1.0f;
     FoV = 45.0f;
     speed = 3.0f;
     mouseSpeed = 0.001f;
