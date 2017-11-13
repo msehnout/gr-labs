@@ -86,7 +86,11 @@ void createContext()
     const GLfloat planeVertices[] = {
         -size, -planeY, -size,
         -size, -planeY,  size,
-        size, -planeY,  size,
+         size, -planeY,  size,
+        // second triangle
+        -size, -planeY, -size,
+         size, -planeY, -size,
+         size, -planeY,  size,
     };
     glBufferData(GL_ARRAY_BUFFER, sizeof(planeVertices),
         &planeVertices[0], GL_STATIC_DRAW);
@@ -126,7 +130,7 @@ void mainLoop()
         mat4 planeMVP = projectionMatrix * viewMatrix * planeModelMatrix;
         glUniformMatrix4fv(MVPLocation, 1, GL_FALSE, &planeMVP[0][0]);
         glUniformMatrix4fv(MLocation, 1, GL_FALSE, &planeModelMatrix[0][0]);
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        glDrawArrays(GL_TRIANGLES, 0, 6);
         //*/
 
         // Task 2.1: translate the plane in + -y direction using the keyboard
