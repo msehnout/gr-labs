@@ -25,7 +25,7 @@ void main()
     }
     else if (dot(vertexPosition_worldspace, planeCoeffs) < -0.02)
     {
-        color = vec4(0.0, 1.0, 0.0, 1.0);
+        color = vec4(0.0, 1.0, 0.0, 1+0.7*dot(vertexPosition_worldspace, planeCoeffs));
     }
     else
     {

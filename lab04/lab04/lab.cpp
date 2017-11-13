@@ -206,8 +206,14 @@ void pollKeyboard(GLFWwindow* window, int key, int scancode, int action, int mod
 
     // Task 3.4: toggle polygon mode
     if (key == GLFW_KEY_T && action == GLFW_PRESS) {
-        GLint polygonMode;
-        glGetIntegerv(GL_POLYGON_MODE, &polygonMode);
+        GLint polygonMode[50];
+        glGetIntegerv(GL_POLYGON_MODE, polygonMode);
+
+        if (polygonMode[1] == GL_LINE) {
+            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        } else {
+            glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        }
 
         // if GL_LINE, if GL_FILL
     }
@@ -271,7 +277,7 @@ void initialize()
     glDepthFunc(GL_LESS);
 
     // Task 3.3: blend must be enabled
-    /*/
+    //*/
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     //*/
