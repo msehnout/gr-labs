@@ -18,18 +18,18 @@ void main()
 
     // Task 3.2e FS: find on which side of the plane is the vertex and
     // apply different colors (red above 0.02, blue below -0.02 else blue)
-    /*/
-    if (...)
+    //*/
+    if (dot(vertexPosition_worldspace, planeCoeffs) > 0.02)
     {
-        color = ...;
+        color = vec4(1.0, 0.0, 0.0, 1.0);
     }
-    else if (...)
+    else if (dot(vertexPosition_worldspace, planeCoeffs) < -0.02)
     {
-        color = ...;
+        color = vec4(0.0, 1.0, 0.0, 1.0);
     }
     else
     {
-        color = ...;
+        color = vec4(0.0, 0.0, 1.0, 1.0);
     }
     //*/
 

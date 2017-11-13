@@ -35,5 +35,5 @@ void main()
     gl_Position = MVP * coordinates_modelspace;
 
     // Task 3.2b VS: calculate vertex position in world space
-    // vertexPosition_worldspace = ...;
+    vertexPosition_worldspace = M * coordinates_modelspace;
 }

@@ -155,15 +155,16 @@ void mainLoop()
         //*/
 
         // Task 3.1: calculate plane coefficients
-        /*/
+        //*/
         vec3 planeNormal(planeRotation * vec4(0, 1, 0, 1));
-        float d = ...;
+        // vec4 point_x0 = planeTranslation * vec4(0,0,0,1);
+        float d = -dot(planeNormal, planePosition);//-planeNormal[0]*point_x0[0] -planeNormal[1]*point_x0[1] -planeNormal[2]*point_x0[2];
         vec4 planeCoeffs(planeNormal, d);
         //*/
 
         // Task 3.3d:
-        /*/
-        glUniform4f(planeLocation, ...);
+        //*/
+        glUniform4f(planeLocation, planeCoeffs.x, planeCoeffs.y, planeCoeffs.z, planeCoeffs.w);
         //*/
 
         // Task 4.1b: calculate and transmit the detachment offset to the GPU
