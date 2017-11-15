@@ -168,8 +168,9 @@ void mainLoop()
         //*/
 
         // Task 4.1b: calculate and transmit the detachment offset to the GPU
-        /*/
-        vec3 detachmentVec = ...;
+        //*/
+        vec3 detachmentVec = detachmentCoeff * planeNormal;
+        glUniform3f(detachmentCoeffLocation, detachmentVec.x, detachmentVec.y, detachmentVec.z);
         //*/
 
         // model
@@ -197,7 +198,7 @@ void pollKeyboard(GLFWwindow* window, int key, int scancode, int action, int mod
     }
 
     // Task 2.2: planeAngle J, L keys
-    if (key == GLFW_KEY_O) {
+    if (key == GLFW_KEY_J) {
         planeAngle += 0.01;
     }
     if (key == GLFW_KEY_L) {
@@ -206,10 +207,10 @@ void pollKeyboard(GLFWwindow* window, int key, int scancode, int action, int mod
 
     // Task 3.4: toggle polygon mode
     if (key == GLFW_KEY_T && action == GLFW_PRESS) {
-        GLint polygonMode[50];
+        GLint polygonMode[2];
         glGetIntegerv(GL_POLYGON_MODE, polygonMode);
 
-        if (polygonMode[1] == GL_LINE) {
+        if (polygonMode[0] == GL_LINE) {
             glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         } else {
             glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -219,6 +220,12 @@ void pollKeyboard(GLFWwindow* window, int key, int scancode, int action, int mod
     }
 
     // Task 4.1a: change the detachment coefficient using U, O keys
+    if (key == GLFW_KEY_U) {
+        detachmentCoeff += 0.01;
+    }
+    if (key == GLFW_KEY_O) {
+        detachmentCoeff -= 0.01;
+    }
 }
 
 void initialize()

@@ -53,14 +53,14 @@ void main()
 
 
     // Task 4.1d: discard the fragments that are between the two halves
-    /*/
-    if (...)
+    //*/
+    if ((dot(vertexPosition_worldspace, planeCoeffs) < (0.1)) && (dot(vertexPosition_worldspace, planeCoeffs) > (-0.1)))
     {
         discard;
     }
     else
     {
-        color = ...;
+        color = color;
     }
     //*/
     

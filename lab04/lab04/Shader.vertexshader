@@ -21,14 +21,14 @@ void main()
 
     // Task 4.1c: displace the coordinates above by the detachmentDisplacement 
     // and the coordinates below by -detachmentDisplacement
-    /*/
-    if (...)
+    //*/
+    if (dot(M * coordinates_modelspace, planeCoeffs) > 0.02)
     {
-        coordinates_modelspace = ...;
+        coordinates_modelspace = coordinates_modelspace + vec4(detachmentDisplacement,1);
     }
-    else if (...)
+    else if (dot(M * coordinates_modelspace, planeCoeffs) < -0.02)
     {
-        coordinates_modelspace = ...;
+        coordinates_modelspace = coordinates_modelspace + vec4(detachmentDisplacement * vec3(-1),1);
     }
     //*/
     
