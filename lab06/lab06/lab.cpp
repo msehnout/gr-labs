@@ -296,14 +296,14 @@ void createContext() {
     //*/
     static const GLfloat surfaceSkinningIndexes[] = {
         0,  // 1
-        0,
-        0,  // 2
-        0,
-        0,  // 3
-        0,
-        0,  // 4
-        0,
-        0,  // 5
+        1,
+        1,  // 2
+        1,
+        1,  // 3
+        1,
+        1,  // 4
+        1,
+        1,  // 5
         0,
         0,  // 6
         0
@@ -455,7 +455,7 @@ void mainLoop() {
         // first segment
         segment->bind();
 
-        mat4 jointLocal0 = rotate(mat4(1), float(3.14/8), vec3(0.0,0.0,1.0));
+        mat4 jointLocal0 = rotate(mat4(1), float(3.14/8)*float(sin(t/50.0)), vec3(0.0,0.0,1.0));
         mat4 bodyWorld0 = mat4(1) * jointLocal0;
         glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, &bodyWorld0[0][0]);
 
@@ -505,7 +505,7 @@ void mainLoop() {
         //*/
 
         // Task 2: render the skin
-        /*/
+        //*/
         glBindVertexArray(surfaceVAO);
 
         // no need to use the model matrix, because each vertex will be
@@ -518,9 +518,12 @@ void mainLoop() {
         // Task 2.2: define the binding transformations (B0, B1)
         // The binding is the inverse of the body's world transformation
         // at the binding pose
-        mat4 bodyWorld00 = mat4(1.0);
+        mat4 bodyWorld00 = mat4(1.0) * rotate(mat4(1), float(0), vec3(0.0,0.0,1.0));
         mat4 B0 = glm::inverse(bodyWorld00);
-        mat4 bodyWorld10 = mat4(1.0);
+
+        mat4 bodyWorld10 = mat4(1.0)
+                           * translate(mat4(1), vec3(0.5,0.0,0.0))
+                           * rotate(mat4(1), float(0)*float(sin(t/50.0)), vec3(0.0,0.0,1.0));
         mat4 B1 = glm::inverse(bodyWorld10);
 
         // Task 2.3: define the bone transformations T and send them to the GPU
@@ -529,14 +532,14 @@ void mainLoop() {
         // by providing the size of the array in the second argument. Since
         // we have an array of 2D arrays T is 3D.
         vector<mat4> T = {
-            mat4(1.0),
-            mat4(1.0)
+            bodyWorld0 * B0,
+            bodyWorld1 * B1
         };
         glUniformMatrix4fv(boneTransformationsLocation, T.size(),
             GL_FALSE, &T[0][0][0]);
 
         // do not forget to enable the skinning "1"!
-        glUniform1i(useSkinningLocation, 0);
+        glUniform1i(useSkinningLocation, 1);
 
         // render the skin
         glDrawArrays(GL_LINES, 0, 2 * 6);
