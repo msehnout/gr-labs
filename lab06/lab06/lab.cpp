@@ -427,7 +427,9 @@ void free() {
 
 void mainLoop() {
     camera->position = vec3(0, 0, 2.5);
+    int t = 0;
     do {
+        ++t;
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         glUseProgram(shaderProgram);
@@ -453,8 +455,9 @@ void mainLoop() {
         // first segment
         segment->bind();
 
-        mat4 bone1 = mat4(1);
-        glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, &bone1[0][0]);
+        mat4 jointLocal0 = rotate(mat4(1), float(3.14/8), vec3(0.0,0.0,1.0));
+        mat4 bodyWorld0 = mat4(1) * jointLocal0;
+        glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, &bodyWorld0[0][0]);
 
         // draw segment
         segment->draw(GL_LINES);
@@ -462,12 +465,24 @@ void mainLoop() {
         segment->draw(GL_POINTS);
         glDisable(GL_PROGRAM_POINT_SIZE);
 
-        
+        mat4 jointLocal1 = translate(mat4(1), vec3(0.5,0.0,0.0))
+                           * rotate(mat4(1), float(3.14/4)*float(sin(t/50.0)), vec3(0.0,0.0,1.0));
+        mat4 bodyWorld1 = bodyWorld0 * jointLocal1;
+        glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, &bodyWorld1[0][0]);
+
+        // draw segment
+        segment->draw(GL_LINES);
+        glEnable(GL_PROGRAM_POINT_SIZE);
+        segment->draw(GL_POINTS);
+        glDisable(GL_PROGRAM_POINT_SIZE);
         //*/
 
         // Task 1.2: make two revolute joints, so that the segments rotate
         // around the z-axis and the orientation of the second segment
         // depends on the first
+
+
+
         // Task 1.3: animate the movement of the segments by assigning values
         // to the two coordinates
         /*/
