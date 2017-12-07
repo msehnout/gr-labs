@@ -6,6 +6,9 @@ project (VVR_OGL_LABORATORY)
 
 find_package(OpenGL REQUIRED)
 
+# for rdm
+set(CMAKE_EXPORT_COMPILE_COMMANDS=1)
+
 # c++11
 if(${CMAKE_CXX_COMPILER_ID} MATCHES GNU OR ${CMAKE_CXX_COMPILER_ID} MATCHES Clang)
   # Using C++11 on OSX requires using libc++ instead of libstd++.
@@ -47,7 +50,7 @@ include_directories(
     external/glfw-3.1.2/include/GLFW/
     external/glm-0.9.7.1/
     external/glew-1.13.0/include/
-    #external/Simple-OpenGL-Image-Library/include/
+    external/Simple-OpenGL-Image-Library/include/
     external/tinyxml2/include/
     external/tinyobjloader/include/
     .
@@ -57,7 +60,7 @@ set(ALL_LIBS
     ${OPENGL_LIBRARY}
     glfw
     GLEW_1130
-    #SOIL
+    SOIL
     TINYXML2
 )
 
@@ -90,7 +93,6 @@ add_executable(lab05
 )
 target_link_libraries(lab05
     ${ALL_LIBS}
-    -lSOIL
 )
 # Xcode and Visual working directories
 set_target_properties(lab05 

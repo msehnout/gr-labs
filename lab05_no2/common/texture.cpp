@@ -1,6 +1,6 @@
 #include <GL/glew.h>
 #include <glfw3.h>
-#include <SOIL/SOIL.h>
+#include <SOIL.h>
 #include <string.h>
 #include <iostream>
 #include "texture.h"

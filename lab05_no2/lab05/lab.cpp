@@ -116,7 +116,7 @@ void createContext()
     // obj
     // Task 6.1: bind object vertex positions to attribute 0, UV coordinates
     // to attribute 1 and normals to attribute 2
-    //*/
+    /*/
     glGenVertexArrays(1, &objVAO);
     glBindVertexArray(objVAO);
 
@@ -164,7 +164,7 @@ void free()
 
 void mainLoop()
 {
-    glm::vec3 lightPos = glm::vec3(0, 0, 4);
+    glm::vec3 lightPos = glm::vec3(0, 0, 1);
 
     do
     {

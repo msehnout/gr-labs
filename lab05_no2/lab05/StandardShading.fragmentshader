@@ -52,9 +52,9 @@ void main()
 
     // Task 6.5: assign material properties from the texture maps
     /*/
-    Ks = vec3(texture(specularColorSampler, vertex_UV).rgb);
-    Kd = vec3(...);
-    Ka = vec3(0.1, 0.1, 0.1);
+    Ks = vec4(texture(specularColorSampler, vertex_UV).rgb, 1);
+    Kd = vec4(...);
+    Ka = vec4(0.1, 0.1, 0.1);
     Ns = 10;
     //*/
 
@@ -70,7 +70,8 @@ void main()
     //vec_vertex_position=vec4()
     //vec_normal_position=vec4()
     vec3 vertex_position_cameraspace = (V*M*vec4(vertex_position_modelspace,1)).xyz;
-    vec3 /*vertex_normal_cameraspace*/ N = normalize((V*M*vec4(vertex_normal_modelspace,0)).xyz);
+    /* vertex_normal_cameraspace: */
+    vec3 N = normalize((V*M*vec4(vertex_normal_modelspace,0)).xyz);
 
     vec3 light_position_cameraspace = (V * vec4(light_position_worldspace, 1)).xyz;
     vec3 L = normalize(light_position_cameraspace - vertex_position_cameraspace);
@@ -81,31 +82,36 @@ void main()
     //  - light is at the vertical of the triangle -> 1
     //  - light is perpendicular to the triangle -> 0
     //  - light is behind the triangle -> 0
-    float costheta = clamp(dot(L,N),0,1);
+    float costheta = clamp(dot(L,N),0.0,1.0);
 
     // Task 3.6: calculate the diffuse intensity and the new fragment color
-    vec4 Id = Kd * Ld * costheta;
+    vec4 Id = Ld * Kd * costheta;
     fragment_color = Ia + Id;
 
     // Task 4: model specular intensity
     // Task 4.1: compute reflexion direction (R) in camera space
-
+    vec3 R = reflect(-L,N);
     // Task 4.2: compute surface to viewer direction (E) in camera space
-
+    vec3 E = normalize(-vertex_position_cameraspace);
     // Task 4.3: compute cos(alpha)
     // cosine of the angle between the Eye vector and the Reflect vector,
     // clamped to 0; use clamp(float, min, max)
     //  - Looking into the reflection -> 1
     //  - Looking elsewhere -> < 1
-
+    float dot_prod_specular = clamp(dot(R,E),0,1);
     // Task 4.4: calculate specular factor cos(a)^Ns
-    
+    float specular_factor = pow (dot_prod_specular, Ns);
     // Task 4.5: calculate the specular intensity and the new fragment color
-  
+    vec4 Is = Ls * Ks * specular_factor;
+
 
     // Task 5: model the light distance effect (add a light_power parameter).
     // Change camera position to verify the correct behavior.
-    
+    //vec3 v = vertex_position_cameraspace;
+    //vec3 l = light_position_cameraspace;
+    //d_squared = pow(v.x-l.x, 2) + pow(v.y-l.y, 2) + pow(v.z-l.z, 2);
+    fragment_color = Ia + Id + Is;
+    //fragment_color = Ia + Id/d_squared + Is/d_squared;
            
     // Homework 3: make light properties as uniform variables and use the keyboard  
     // keys to adjust them (position, light color and power).
